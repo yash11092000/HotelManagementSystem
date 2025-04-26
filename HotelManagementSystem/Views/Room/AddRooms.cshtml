@@ -1,0 +1,110 @@
+﻿@model HotelManagementSystem.Models.Room
+
+@{
+	ViewData["Title"] = "Add New Room";
+}
+
+<style>
+
+</style>
+
+<div class="container">
+	@* <form id="RoomForm" enctype="multipart/form-data"> *@
+	<form asp-action="AddNewRooms" method="post" enctype="multipart/form-data">
+
+		@Html.AntiForgeryToken()
+		<div class="row">
+			<div class="col-md-3">
+				<label>Room No</label>
+				<input type="text" required class="form-control" id="RoomNumber" name="RoomNumber" placeholder="Enter Room No" />
+			</div>
+			<div class="col-md-3">
+				<label>Room Type</label>
+				<select id="Type" name="Type" class="form-select" aria-label="Default select example">
+					<option selected value="0">Open this select menu</option>
+					<option value="1">Standard room</option>
+					<option value="2">Deluxe room</option>
+					<option value="3">Executive room</option>
+					<option value="4">Family room</option>
+					<option value="5">Suite</option>
+					<option value="6">Penthouse</option>
+				</select>
+			</div>
+
+			<div class="col-md-3">
+				<label>Room Price</label>
+				<div class="input-group">
+					<span class="input-group-text" id="basic-addon1">₹</span>
+					<input type="number" required class="form-control" id="Price" name="Price" placeholder="Enter Room Price" />
+				</div>
+			</div>
+			<div class="form-check col-md-2 mt-4">
+				<input class="form-check-input" type="checkbox" value="true" checked id="IsAvailable" name="IsAvailable">
+				<label class="form-check-label" for="checkDefault">
+					Is Room Available
+				</label>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group">
+					<label>Room Image</label>
+					<input type="file" class="form-control" id="RoomImage" name="RoomImage">
+				</div>
+			</div>
+			<div class="col-md-12 d-flex justify-content-end align-items-center gap-3">
+				<button type="reset" class="btn btn-danger">Reset</button>
+				<button type="button" class="btn btn-success" id="ValidateForm">Save Room</button>
+				<button type="submit" class="btn btn-success" id="SaveRoom" hidden></button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+@section Scripts {
+	<script>
+		var notyf = new Notyf({
+		duration: 2000,
+		position: {
+		  x: 'right',
+		  y: 'top',
+		},
+		});
+
+		$("#ValidateForm").on("click",function(){
+			var RoomNumber = $("#RoomNumber");
+			var Type = $("#Type");
+			var Price = $("#Price");
+			var IsAvailable = $("#IsAvailable");
+			var formData = new FormData($('#RoomForm')[0]);
+
+			if(RoomNumber.val() == ""){
+				RoomNumber.focus();
+					notyf.error('Please Enter Room No');
+					}
+			else if(Type.val() == "0"){
+				Type.focus();
+				notyf.error("Please Select Room Type");
+			}
+			else if(Price.val() == ""){
+				Price.focus();
+				notyf.error("Please Select Room Price");
+			}
+			else{
+				console.log("hello")
+				$("#SaveRoom").trigger("click");
+			}
+		})
+
+
+
+		function Validator(Message){
+					Swal.fire({
+					 title:Message ,
+					icon: "success",
+					 draggable: false
+		})
+		}
+
+	</script>
+}
