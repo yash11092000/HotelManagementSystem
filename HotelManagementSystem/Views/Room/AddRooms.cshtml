@@ -45,10 +45,19 @@
 				</label>
 			</div>
 
-			<div class="col-md-3">
+			@* 	<div class="col-md-3">
 				<div class="form-group">
 					<label>Room Image</label>
 					<input type="file" class="form-control" id="RoomImage" name="RoomImage">
+				</div>
+			</div> *@
+
+			<div class="col-md-3">
+				<div class="form-group">
+					<label>Room Image</label>
+					<input type="file" class="form-control" id="RoomImage" name="RoomImage" onchange="previewImage(event)">
+					<br />
+					<img id="RoomImagePreview" src="#" style="display:none; width:150px; height:100px; object-fit:cover; border-radius:10px;" />
 				</div>
 			</div>
 			<div class="col-md-12 d-flex justify-content-end align-items-center gap-3">
@@ -91,7 +100,7 @@
 				notyf.error("Please Select Room Price");
 			}
 			else{
-				console.log("hello")
+				//console.log("hello")
 				$("#SaveRoom").trigger("click");
 			}
 		})

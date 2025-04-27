@@ -1,0 +1,21 @@
+﻿@model HotelManagementSystem.Models.Room
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Book Room";
+}
+
+<h2>Book Room @Model.RoomNumber</h2>
+
+<form method="post" asp-action="BookRoom" asp-controller="Booking">
+    <input type="hidden" name="roomId" value="@Model.Id" />
+    <div class="form-group">
+        <label>Check-In Date</label>
+        <input type="date" name="checkIn" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Check-Out Date</label>
+        <input type="date" name="checkOut" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-success mt-3">Confirm Booking</button>
+</form>

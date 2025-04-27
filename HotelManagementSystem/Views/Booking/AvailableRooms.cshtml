@@ -1,0 +1,25 @@
+﻿@model IEnumerable<HotelManagementSystem.Models.Room>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Available Rooms";
+}
+
+<h2>Available Rooms</h2>
+
+<div class="row">
+    @foreach (var room in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+                <img src="@room.ImageUrl" class="card-img-top" alt="Room Image" style="height:200px; object-fit:cover;">
+                <div class="card-body">
+                    <h5 class="card-title">Room @room.RoomNumber</h5>
+                    <p class="card-text">Type: @room.Type</p>
+                    <p class="card-text">Price: ₹@room.Price</p>
+                    <a href="@Url.Action("BookRoom", "Booking", new { roomId = room.Id })" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,75 @@
+﻿@model HotelManagementSystem.Models.Room
+
+@{
+	ViewData["Title"] = "Edit Room";
+}
+
+<div class="container">
+	<form asp-action="EditRoom" enctype="multipart/form-data">
+		<input type="hidden" asp-for="Id" />
+
+		<div class="row">
+			<div class="col-md-3">
+				<label>Room No</label>
+				<input asp-for="RoomNumber" class="form-control" />
+			</div>
+
+			<div class="col-md-3">
+				<label>Room Type</label>
+				<select asp-for="Type" class="form-select">
+					<option value="1">Standard room</option>
+					<option value="2">Deluxe room</option>
+					<option value="3">Executive room</option>
+					<option value="4">Family room</option>
+					<option value="5">Suite</option>
+					<option value="6">Penthouse</option>
+				</select>
+			</div>
+
+			<div class="col-md-3">
+				<label>Room Price</label>
+				<div class="input-group">
+					<span class="input-group-text">₹</span>
+					<input asp-for="Price" class="form-control" />
+				</div>
+			</div>
+
+			<div class="form-check col-md-2 mt-4">
+				<input asp-for="IsAvailable" class="form-check-input" />
+				<label class="form-check-label" asp-for="IsAvailable">Is Room Available</label>
+			</div>
+
+			<div class="col-md-3">
+				<div class="form-group">
+					<label>Room Image</label>
+					<input type="file" class="form-control" id="RoomImage" name="RoomImage"  onchange="previewImage(event)">
+					<br />
+					<img id="RoomImagePreview" src="@Model.ImageUrl" style="width:150px; height:100px; object-fit:cover; border-radius:10px;" />
+				</div>
+			</div>
+
+
+			<div class="col-md-12 mt-4 d-flex justify-content-end align-items-center gap-3">
+				<a asp-action="Index" class="btn btn-secondary">Back</a>
+				<button type="submit" class="btn btn-success">Update Room</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<script>
+
+	function previewImage(event) {
+		var input = event.target;
+		var reader = new FileReader();
+		reader.onload = function () {
+			var imgElement = document.getElementById('RoomImagePreview');
+			imgElement.src = reader.result;
+			imgElement.style.display = 'block';
+		}
+		if (input.files && input.files[0]) {
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+</script>

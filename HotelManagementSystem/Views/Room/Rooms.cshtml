@@ -3,44 +3,101 @@
 @{
 	ViewData["Title"] = "Rooms";
 }
+<style>
+	.card-img-top {
+		transition: transform 0.3s ease;
+	}
 
-<h1>Rooms</h1>
+	.card:hover .card-img-top {
+		transform: scale(1.05);
+	}
+</style>
+<div class="container mt-4">
+	<div class="d-flex justify-content-between align-items-center mb-3">
+		<h2>Manage Rooms</h2>
+		<a class="btn btn-primary" asp-action="AddRooms">+ Add New Room</a>
+	</div>
 
-<p>
-	<a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-	<thead>
-		<tr>
-			<th>Room Image</th>
-			<th>Room No</th>
-			<th>Room Type</th>
-			<th>Room Price</th>
-			<th>Room IsAailable</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach (var item in Model)
+	<div class="row">
+		@foreach (var room in Model)
 		{
-			<tr>
-				<td>
-					@item.RoomNumber
-				</td>
-				<td>
-					@item.Type
-				</td>
-				<td>
-					@item.Price
-				</td>
-				<td>
-					@item.IsAvailable
-				</td>
-				<td>
-					<button type="button">View Room</button>
-					<button type="button">Book Room</button>
-				</td>
-			</tr>
+			<div class="col-md-4 mb-4">
+				<div class="card shadow-sm">
+					@if (!string.IsNullOrEmpty(room.ImageUrl))
+					{
+						<img src="@room.ImageUrl" class="card-img-top" style="height: 200px; object-fit: cover;" alt="Room Image">
+					}
+					else
+					{
+						<img src="https://via.placeholder.com/400x200?text=No+Image" class="card-img-top" alt="No Image Available">
+					}
+					<div class="card-body">
+						<h5 class="card-title">Room No: @room.RoomNumber</h5>
+						<p class="card-text">Type: <strong>@room.Type</strong></p>
+						<p class="card-text">Price: ₹@room.Price</p>
+						<p>
+							@if (room.IsAvailable)
+							{
+								<span class="badge bg-success">Available</span>
+							}
+							else
+							{
+								<span class="badge bg-danger">Not Available</span>
+							}
+						</p>
+						<div class="d-flex justify-content-between">
+							<a href="@Url.Action("EditRoom", "Room", new { id = room.Id })" class="btn btn-sm btn-warning">Edit</a>
+							<button class="btn btn-sm btn-danger" onclick="DeleteRoom(@room.Id)">Delete</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		}
-	</tbody>
-</table>
+	</div>
+</div>
+
+<script>
+	function DeleteRoom(id){
+		 Swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!'
+				}).then((result) => {
+					if (result.isConfirmed) {
+
+						$.ajax({
+							url: '/Room/DeleteRoom',
+							type: 'POST',
+							data:{id: id},
+							success: function (response) {
+								if(response){
+									Swal.fire(
+										'Deleted!',
+										'Room has been deleted.',
+										'success'
+									).then(() => {
+										location.reload(); // reload the page to refresh the list
+									});
+								}
+							},
+							error: function (xhr, status, error) {
+								Swal.fire(
+									'Error!',
+									'Something went wrong!',
+									'error'
+								);
+							}
+						});
+
+					}
+				});
+
+
+	}
+</script>
+
+

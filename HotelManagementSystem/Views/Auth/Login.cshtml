@@ -1,0 +1,53 @@
+﻿@model HotelManagementSystem.Models.User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center">Login</h2>
+
+            <!-- Display error message if ViewBag.ErrorMessage is set -->
+            @if (ViewBag.ErrorMessage != null)
+            {
+                <div class="alert alert-danger" id="errorAlert">
+                    <strong>Error!</strong> @ViewBag.ErrorMessage
+                </div>
+            }
+
+            <form method="post" asp-action="Login">
+                <div class="form-group">
+                    <label for="UsernameOrEmail">Username or Email</label>
+                    <input type="text" id="Email" name="Email" class="form-control" required placeholder="Enter your username or email" />
+                </div>
+
+                <div class="form-group mt-3">
+                    <label for="Password">Password</label>
+                    <input type="password" id="PasswordHash" name="PasswordHash" class="form-control" required placeholder="Enter your password" />
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg w-100">Login</button>
+                </div>
+
+                <div class="text-center mt-3">
+                    <p>Don't have an account? <a href="@Url.Action("Register", "Auth")">Register here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Similar to the Register page, hide error alert after 5 seconds
+    window.onload = function() {
+        var errorAlert = document.getElementById("errorAlert");
+        if (errorAlert) {
+            setTimeout(function() {
+                errorAlert.style.display = 'none';  // Hide the alert after 5 seconds
+            }, 5000);
+        }
+    };
+</script>

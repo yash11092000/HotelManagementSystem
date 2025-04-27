@@ -1,0 +1,10 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Booking Successful";
+}
+
+<div class="alert alert-success mt-5">
+    <h4>Your booking has been successful! 🎉</h4>
+    <p>Thank you for booking with us.</p>
+    <a href="@Url.Action("AvailableRooms", "Booking")" class="btn btn-primary">Book Another Room</a>
+</div>
