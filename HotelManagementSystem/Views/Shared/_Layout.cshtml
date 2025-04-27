@@ -23,7 +23,7 @@
 		{
 			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
 				<div class="container-fluid">
-					<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HotelManagementSystem</a>
+					<a class="navbar-brand" href="javascript:void(0)">HotelManagementSystem</a>
 					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
 							aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
@@ -33,16 +33,19 @@
 							@if (role == "User")
 							{
 								<li class="nav-item">
-									<a class="nav-link" href="/User/AvailableRooms">Available Rooms</a>
+									<a class="nav-link" href="/Booking/AvailableRooms">Available Rooms</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="/User/MyBookings">My Bookings</a>
+									<a class="nav-link" href="/Booking/MyBookings">My Bookings</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/User/Profile">Profile</a>
 								</li>
 							}
 							else if (role == "Admin")
 							{
 								<li class="nav-item">
-									<a class="nav-link" href="/Admin/ManageRooms">Manage Rooms</a>
+									<a class="nav-link" href="/Room/Rooms">Manage Rooms</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="/Admin/ManageBookings">Manage Bookings</a>
@@ -51,6 +54,7 @@
 							<li class="nav-item ms-auto">
 								<a class="nav-link text-primary" asp-controller="Auth" asp-action="Logout">Logout</a>
 							</li>
+
 						</ul>
 					</div>
 				</div>

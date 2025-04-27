@@ -11,7 +11,7 @@ namespace HotelManagementSystem.Models
         public int RoomId { get; set; }
 
         [Required]
-        public int CustomerId { get; set; }
+        public int UserId { get; set; }
 
         public DateTime CheckInDate { get; set; }
 
@@ -22,7 +22,7 @@ namespace HotelManagementSystem.Models
         [ForeignKey("RoomId")]
         public Room Room { get; set; }
 
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
+        [ForeignKey("UserId")]
+        public User Users { get; set; }
     }
 }

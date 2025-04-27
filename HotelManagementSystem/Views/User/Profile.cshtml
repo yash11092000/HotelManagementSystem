@@ -1,0 +1,22 @@
+﻿@model HotelManagementSystem.Models.User
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "Profile";
+}
+<h2>Your Profile</h2>
+
+<form method="post">
+	<input type="text" id="Id" name="Id" value="@Model.Id" hidden/>
+	<div class="form-group">
+		<label for="Username">Username</label>
+		<input type="text" id="Username" name="Username" value="@Model.Username" class="form-control" required />
+	</div>
+	<div class="form-group">
+		<label for="Email">Email</label>
+		<input type="email" id="Email" name="Email" value="@Model.Email" class="form-control" required />
+	</div>
+	<!-- Add other fields as necessary -->
+
+	<button type="submit" class="btn btn-primary mt-3">Update Profile</button>
+</form>

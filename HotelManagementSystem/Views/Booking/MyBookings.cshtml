@@ -1,0 +1,48 @@
+﻿@model List<HotelManagementSystem.Models.Booking>
+
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewData["Title"] = "My Bookings";
+}
+
+
+<h2>Your Booking History</h2>
+
+@if (Model != null && Model.Count > 0)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Room</th>
+				<th>Check-in Date</th>
+				<th>Check-out Date</th>
+				<th>Payment Status</th>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var booking in Model)
+			{
+				<tr>
+					<td>@booking.Room.RoomNumber</td>
+					<td>@booking.CheckInDate.ToString("dd MMM yyyy")</td>
+					<td>@booking.CheckOutDate.ToString("dd MMM yyyy")</td>
+					<td>@booking.PaymentStatus</td>
+					<td>
+						@if (booking.PaymentStatus == "Pending")
+						{
+
+							<button onclick="location.href='@Url.Action("CancelBooking", new { bookingId = booking.Id })'" class="btn btn-danger">Cancel</button>
+							<button onclick="location.href='@Url.Action("MakePayment", new { bookingId = booking.Id })'" class="btn btn-success">Make Payment</button>
+						}
+
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<p>You have no bookings yet.</p>
+}

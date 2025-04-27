@@ -100,8 +100,8 @@ namespace HotelManagementSystem.Controllers
                     {
                         // Log in user (Set session or cookie)
                         // Example: store user ID in session
-                        HttpContext.Session.SetInt32("UserId", user.Id);
-                        HttpContext.Session.SetString("Role", user.Role);
+                        HttpContext.Session.SetString("UserId",Convert.ToString(user.Id));
+                        HttpContext.Session.SetString("Role",Convert.ToString(user.Role));
                         var claims = new List<Claim>
                         {
                             new Claim(ClaimTypes.Name, user.Username),

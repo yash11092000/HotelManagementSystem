@@ -2,6 +2,40 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Admin Dashboard";
 }
+<!-- Admin Dashboard with Dynamic Data -->
+<div class="container mt-4">
+    <h1 class="h3">Admin Dashboard</h1>
 
-<h2>Welcome Admin!</h2>
-<p>Here you can manage Rooms, Users, and Bookings.</p>
+    <!-- Dashboard Stats (Cards) -->
+    <div class="row">
+        <!-- Total Bookings Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">Total Bookings</h5>
+                    <p class="card-text">@ViewBag.TotalBookings</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Users Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Active Users</h5>
+                    <p class="card-text">@ViewBag.ActiveUsers</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canceled Bookings Card -->
+        <div class="col-md-4 mb-3">
+            <div class="card text-white bg-danger">
+                <div class="card-body">
+                    <h5 class="card-title">Canceled Bookings</h5>
+                    <p class="card-text">@ViewBag.CanceledBookings</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

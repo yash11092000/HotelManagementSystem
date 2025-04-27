@@ -1,6 +1,7 @@
 ﻿using HotelManagementSystem.Context;
 using HotelManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelManagementSystem.Controllers
 {
@@ -41,13 +42,14 @@ namespace HotelManagementSystem.Controllers
             var booking = new Booking
             {
                 RoomId = roomId,
-                CustomerId = Convert.ToInt32(HttpContext.Session.GetString("UserId")),  // Assuming we saved user id in session at login
+                UserId = Convert.ToInt32(HttpContext.Session.GetString("UserId")),  // Assuming we saved user id in session at login
                 CheckInDate = checkIn,
                 CheckOutDate = checkOut,
                 PaymentStatus = "Pending"
             };
 
             _context.Bookings.Add(booking);
+            _context.SaveChanges();
 
             // Mark room unavailable
             var room = _context.Rooms.FirstOrDefault(r => r.Id == roomId);
@@ -62,6 +64,49 @@ namespace HotelManagementSystem.Controllers
         {
             return View();
         }
+        public IActionResult MyBookings()
+        {
+            var userId = HttpContext.Session.GetString("UserId"); // Get UserId from session
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account"); // Redirect to Login if UserId not found
+            }
 
+            var bookings = _context.Bookings
+                                   .Where(b => b.UserId == int.Parse(userId))
+                                   .Include(b => b.Users)
+                                   .Include(b => b.Room)
+                                   .ToList();
+
+            return View(bookings);
+        }
+        public IActionResult CancelBooking(int bookingId)
+        {
+            var booking = _context.Bookings.FirstOrDefault(b => b.Id == bookingId);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            booking.PaymentStatus = "Canceled"; // Update the booking status
+            _context.SaveChanges();
+
+            return RedirectToAction("MyBookings");
+        }
+        public IActionResult MakePayment(int bookingId)
+        {
+            var booking = _context.Bookings.FirstOrDefault(b => b.Id == bookingId);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+
+            // Implement payment gateway integration here
+
+            booking.PaymentStatus = "Paid"; // Update payment status after successful transaction
+            _context.SaveChanges();
+
+            return RedirectToAction("MyBookings");
+        }
     }
 }
